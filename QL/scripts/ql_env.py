@@ -2,7 +2,7 @@ import numpy as np
 from PIL import Image
 import cv2
 import matplotlib.pyplot as plt
-import pickle   # to save nd load Q table
+import pickle   # to save and load Q table
 
 from matplotlib import style
 import time
