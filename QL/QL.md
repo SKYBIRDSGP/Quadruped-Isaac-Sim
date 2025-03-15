@@ -1,6 +1,8 @@
 # WHAT IS QL:
 
-Have Q Values for every action you can probably take any action 'a' given the state 's'. ANd over time we update these values such that running through the chain of actions will produce good results, by rewarding the 'agents' that get this done, for long term.
+Q-Learning(QL) is a **model-free reinforcement learningalgorithm** used to train an RL agent to maximize the rewards in an environment. It uses a table, called the Q-Table, which stores possible states and the **Q-values**(expected future reward) for each action it can take. 
+
+Over the time, the agent uses this Q table for determining the best actions that it can take. It opts for the action that gives it the maximum reward. Over the time as the agent is getting trained, it updates this table for the maximum rewards it has been getting for the action *'a'* that it opts for when it is at any state *'s'*. And over time, the values are updated, such that running through the chain of actions will produce good results, by rewarding the 'agents' that get this done, for long term.
 
 QL is model free learning, it is not environment specific. 
 
@@ -39,23 +41,24 @@ env.close()
 
 With this we should see the car trying to go up the hill.
 
+### Understanding QL:
+
 ## How is it going to Work:
+
+For updating the Q-Values, we use the Bellman equation:
 
 ![alt text](assets/image.png)
 
-This is the function for calculating the Q values. Using this math, we are going to make a Q table, that given any combination of states of position and velocity.
+
 
 Our Agent will initially explore the values for the Q values and then get trained to choose the accurate values for the appropriate results.
 
-So we will build the Q table.
-
-### Understanding QL:
 #### α (alpha)
 Above in the formula, α (alpha) is the Learning Rate.
 
-Higher alpha value --> Learns faster, but unstable
+Higher alpha value ==> Learns faster, but unstable
 
-Lower  alpha value --> Learns slower, but more stable 
+Lower  alpha value ==> Learns slower, but more stable 
 
 We use alpha(usually between 0.1-0.5) so as to maintain some balance so that the Q-values update smoothly but usually don't get stuck. This means new experiences change Q-values by alpha x 100 % each time. The remaining (1-alpha) x 100 % of the old Q-value is retained to ensure stable learning.
 ####  γ (gamma)
@@ -67,10 +70,14 @@ We do this by tracking a matrix.
 
 ## Building our own RL Environment
 
-First install opencv using: 
+For the example we are trying now, first get some installations done. First install opencv using: 
 
 `pip install opencv-python`
 
 And then 
 
 `pip install pillow`
+
+**THE EXAMPLE WE ARE TRYING**
+
+In a grid, we have 3 blobs, one is the player blob, other is the target or food blod and the next is an enemy blob. Here, the player blob has to try to reach the food/ytarget blob while avoiding the enemy blob. And so for this sake, we are using the Q-Learning to make the player blob learn how to reach the target blob.
