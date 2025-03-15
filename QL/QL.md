@@ -49,3 +49,28 @@ Our Agent will initially explore the values for the Q values and then get traine
 
 So we will build the Q table.
 
+### Understanding QL:
+#### α (alpha)
+Above in the formula, α (alpha) is the Learning Rate.
+
+Higher alpha value --> Learns faster, but unstable
+
+Lower  alpha value --> Learns slower, but more stable 
+
+We use alpha(usually between 0.1-0.5) so as to maintain some balance so that the Q-values update smoothly but usually don't get stuck. This means new experiences change Q-values by alpha x 100 % each time. The remaining (1-alpha) x 100 % of the old Q-value is retained to ensure stable learning.
+####  γ (gamma)
+The Discount Factor (γ) decides how much future rewards matter compared to immediate rewards. It discounts future rewards, meaning that rewards far in the future are worth less than immediate rewards.
+
+Now we do it with a bunch of parameters, but in real world, we cannot keep watching every episode and then figure out what these parameters will be. So we track the rewards per episode for most basic environments. 
+
+We do this by tracking a matrix.
+
+## Building our own RL Environment
+
+First install opencv using: 
+
+`pip install opencv-python`
+
+And then 
+
+`pip install pillow`

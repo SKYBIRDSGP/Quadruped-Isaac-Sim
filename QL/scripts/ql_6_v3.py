@@ -1,15 +1,15 @@
 import gym
 import numpy as np
-
+import matplotlib.pyplot as plt
 ## Initialize the environment
 # env = gym.make("MountainCar-v0", render_mode="")
 env = gym.make("MountainCar-v0")
 # Q-learning hyperparameters
-LEARNING_RATE = 0.1
-DISCOUNT = 0.99
-EPISODES = 25000
+LEARNING_RATE = 0.7
+DISCOUNT = 0.92
+EPISODES = 4000
 
-SHOW_EVERY = 2000  # Show every 2000 episodes
+SHOW_EVERY = 200  # Show every 500 episodes
 
 # Discretization parameters
 DISCRETE_OS_SIZE = [20] * len(env.observation_space.high)  
@@ -23,6 +23,8 @@ epsilon_decay_value = epsilon / (END_EPSILON_DECAYING - START_EPSILON_DECAYING)
 
 # Initialize Q-table with random values
 q_table = np.random.uniform(low=-2, high=0, size=(DISCRETE_OS_SIZE + [env.action_space.n]))
+ep_rewards = []
+aggr_ep_rewards = {'ep':[], 'avg':[], 'min':[], 'max':[]}
 
 # Function to convert continuous state to discrete state
 def get_discrete_state(state):
@@ -31,6 +33,7 @@ def get_discrete_state(state):
 
 # Training loop
 for episode in range(EPISODES):
+    episode_reward = 0 
     if episode % SHOW_EVERY == 0:
         print(f"Episode: {episode}, Epsilon: {epsilon:.3f}")
         render = True
@@ -52,6 +55,7 @@ for episode in range(EPISODES):
 
         # Take action in environment
         new_state, reward, done, truncated, _ = env.step(action)
+        episode_reward += reward 
         new_discrete_state = get_discrete_state(new_state)
 
         # Reward shaping for higher speed
@@ -77,6 +81,22 @@ for episode in range(EPISODES):
     if END_EPSILON_DECAYING >= episode >= START_EPSILON_DECAYING:
         epsilon -= epsilon_decay_value
     
-    Q_table = q_table
+    ep_rewards.append(episode_reward)
+    ## Taking the verage of the rewards
+    if not episode % SHOW_EVERY:
+        average_reward = sum(ep_rewards[-SHOW_EVERY:])/len(ep_rewards[-SHOW_EVERY:])
+        aggr_ep_rewards['ep'].append(episode)
+        aggr_ep_rewards['avg'].append(average_reward)
+        aggr_ep_rewards['min'].append(min(ep_rewards[-SHOW_EVERY:]))
+        aggr_ep_rewards['max'].append(max(ep_rewards[-SHOW_EVERY:]))
+
+        print(f"Episode: {episode} avg: {average_reward} min: {min(ep_rewards[-SHOW_EVERY:])} max: {max(ep_rewards[-SHOW_EVERY:])}")
+
 
 env.close()
+
+plt.plot(aggr_ep_rewards['ep'], aggr_ep_rewards['avg'], label="avg")
+plt.plot(aggr_ep_rewards['ep'], aggr_ep_rewards['min'], label="min")
+plt.plot(aggr_ep_rewards['ep'], aggr_ep_rewards['max'], label="max")
+plt.legend(loc=4)
+plt.show()
