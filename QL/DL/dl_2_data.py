@@ -25,8 +25,6 @@ print(y)
 
 import matplotlib.pyplot as plt
 
-# plt.imshow(data[0][0].view(28,28))
-# plt.show()
 total = 0
 counter_dict = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
 
@@ -41,3 +39,7 @@ print(counter_dict)
 
 for i in counter_dict:
     print(f"{i}: {counter_dict[i]/total*100.0}%")
+
+
+plt.imshow(data[0][0].view(28,28))
+plt.show()
