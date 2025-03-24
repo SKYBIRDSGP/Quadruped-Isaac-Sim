@@ -81,3 +81,11 @@ And then
 **THE EXAMPLE WE ARE TRYING**
 
 In a grid, we have 3 blobs, one is the player blob, other is the target or food blod and the next is an enemy blob. Here, the player blob has to try to reach the food/ytarget blob while avoiding the enemy blob. And so for this sake, we are using the Q-Learning to make the player blob learn how to reach the target blob.
+
+## USING THE DQN 
+
+* Gives better output
+* Also reacts for the unknown actions
+* Recognises the unfamilier moves as well
+* Can be used in for typical complex environments
+* Takes long to train
