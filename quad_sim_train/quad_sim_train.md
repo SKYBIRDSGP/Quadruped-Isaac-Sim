@@ -102,4 +102,4 @@ For Reinforcement Learning, we must have a feedback of the position of the robot
 Now this completes our setup for the simulation and when applied to the quadruped, the robot literally takes any random actions. 
 <video controls src="assets/quad_sim_setup.mp4" title="quad_random_actions"></video>
 
-Now, actions have to be trained using the Reinforcement Learning Algorithms in order to achieve any specific task we want.
+These actions now have to be trained using the Reinforcement Learning Algorithms in order to achieve any specific task we want.
