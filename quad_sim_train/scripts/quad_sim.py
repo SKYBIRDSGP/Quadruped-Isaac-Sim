@@ -14,7 +14,7 @@ p.setTimeStep(1./500)
 urdfFlags = p.URDF_USE_SELF_COLLISION
 urdf_path = os.path.join(os.path.dirname(__file__), "../quad_description/urdf/a1.urdf")
 
-robot = p.loadURDF(urdf_path, [0,0,0.48],[0,0,0,1], flags = urdfFlags, useFixedBase = True)
+robot = p.loadURDF(urdf_path, [0,0,0.48],[0,0,0,1], flags = urdfFlags, useFixedBase = False)
 print(urdf_path)
 print("__________________")
 num_joints = p.getNumJoints(robot)
@@ -25,9 +25,11 @@ for j in range(num_joints):
     joint_id = joint_info[0]  # Joint index
     joint_name = joint_info[1].decode("utf-8")  # Joint name (needs decoding)
     link_name = joint_info[12].decode("utf-8")  # Link name (needs decoding)
+    low_lim = joint_info[8]
+    up_lim = joint_info[9]
     link = p.getLinkState(robot, j)
-    print(f"Joint ID: {joint_id}, Joint Name: {joint_name}, Link Name: {link_name}\n")
-    print(link)
+    print(f"Joint ID: {joint_id}, Joint Name: {joint_name}, Link Name: {link_name}, Lower Limit : {low_lim}, Upper Limit : {up_lim}\n")
+    # print(link)
 while True: 
     p.stepSimulation()
     time.sleep(1./500)
