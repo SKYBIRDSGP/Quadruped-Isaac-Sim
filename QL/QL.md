@@ -89,3 +89,5 @@ In a grid, we have 3 blobs, one is the player blob, other is the target or food 
 * Recognises the unfamilier moves as well
 * Can be used in for typical complex environments
 * Takes long to train
+
+We are going to use the Bellman's equation. After taking any action, we resample the environment to figure out what the next Q value is. 
