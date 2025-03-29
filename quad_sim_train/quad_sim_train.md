@@ -75,3 +75,14 @@ Joint ID: 17, Joint Name: RL_foot_fixed, Link Name: RL_foot, Lower Limit : 0.0, 
 ```
 
 We require these lower and upper limits, so that our RL angent when taking any action should always choose the values in the range between these lower and upper limits.
+
+
+So now as per the data we get from `getJointInfo()`, we get the IDs for the four legs as:
+
+* Front_Right : [ 2 , 3 , 4 ]
+
+* Front_Left : [ 6 , 7 , 8 ]
+
+* Rear_Right : [ 10 , 11 , 12 ]
+
+* Rear_Left : [ 14 , 15 , 16 ]
