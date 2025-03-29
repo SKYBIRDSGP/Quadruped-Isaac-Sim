@@ -86,3 +86,20 @@ So now as per the data we get from `getJointInfo()`, we get the IDs for the four
 * Rear_Right : [ 10 , 11 , 12 ]
 
 * Rear_Left : [ 14 , 15 , 16 ]
+
+So now, we obtain the joint limits of each of the joint and store it in the form of an array, whose `0th` index contains the joint Id, `1st` index contains the lower joint limit and `2nd` index contains the upper joint limit.
+
+Now that we have the joint limits, our agent can effortlessly choose any random action out of the limits it has.
+
+For that case, we use `np.random.uniform(lower_limit, upper_limit)`.
+
+Here, we are using numpy and so the `np.random` chooses any random value, but `uniform(lower_limit, upper_limit)` makes sure that the actions are being taken uniformly between the range of the lower and upper joint limits.
+
+And then using `p.SetMotorControlArray(asset, [id array], control_type, target_positions = [array of targets], forces = [force]*no_of_joints)`, we can achieve the control of the joints of ny robot.
+
+For Reinforcement Learning, we must have a feedback of the position of the robot, hence, we have used the `linear_vel, anguar_vel = p.getBaseVelocity(asset)` which stores the array of linear velocity in `linear_vel` and array of angular velocity in `angular_vel`.
+
+Now this completes our setup for the simulation and when applied to the quadruped, the robot literally takes any random actions. 
+<video controls src="assets/quad_sim_setup.mp4" title="quad_random_actions"></video>
+
+Now, actions have to be trained using the Reinforcement Learning Algorithms in order to achieve any specific task we want.
