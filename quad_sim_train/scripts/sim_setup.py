@@ -1,5 +1,7 @@
 import pybullet as p
 import pybullet_data
+import numpy as np
+import random
 import os
 import time
 
@@ -54,6 +56,35 @@ for i in joint_ids:
 """ 
 ###############################################################################################
 while True: 
+
+    angle_joint_2 = np.random.uniform(joint_limits[0][1] , joint_limits[0][2])
+    angle_joint_3 = np.random.uniform(joint_limits[1][1] , joint_limits[1][2])
+    angle_joint_4 = np.random.uniform(joint_limits[2][1] , joint_limits[2][2])
+
+    angle_joint_6 = np.random.uniform(joint_limits[3][1] , joint_limits[3][2])
+    angle_joint_7 = np.random.uniform(joint_limits[4][1] , joint_limits[4][2])
+    angle_joint_8 = np.random.uniform(joint_limits[5][1] , joint_limits[5][2])
+
+    angle_joint_10 = np.random.uniform(joint_limits[6][1] , joint_limits[6][2])
+    angle_joint_11 = np.random.uniform(joint_limits[7][1] , joint_limits[7][2])
+    angle_joint_12 = np.random.uniform(joint_limits[8][1] , joint_limits[8][2])
+
+    angle_joint_14 = np.random.uniform(joint_limits[9][1] , joint_limits[9][2])
+    angle_joint_15 = np.random.uniform(joint_limits[10][1] , joint_limits[10][2])
+    angle_joint_16 = np.random.uniform(joint_limits[11][1] , joint_limits[1][2])
+
+    p.setJointMotorControlArray(robot, [2, 3, 4, 6, 7, 8, 10, 11, 12, 14, 15, 16], 
+                                p.POSITION_CONTROL, 
+                                targetPositions = [angle_joint_2, angle_joint_3, angle_joint_4, angle_joint_6, angle_joint_7, angle_joint_8, angle_joint_10, angle_joint_11, angle_joint_12, angle_joint_14, angle_joint_15, angle_joint_16],
+                                forces = [50] * len(joint_ids))
+    
+    ## Tracking the Linear and angular velocity of the Quadruped
+    linear_vel, anguar_vel = p.getBaseVelocity(robot)
+    linear_vel = np.array(linear_vel)
+    anguar_vel = np.array(anguar_vel)
+
+    print(linear_vel)
+    print(anguar_vel)
 
     p.stepSimulation()
 
