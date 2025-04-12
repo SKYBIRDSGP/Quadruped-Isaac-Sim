@@ -88,4 +88,4 @@ while True:
 
     p.stepSimulation()
 
-    time.sleep(1./500)
+    time.sleep(1./200)
