@@ -84,7 +84,7 @@ while True:
     anguar_vel = np.array(anguar_vel)
 
     print(linear_vel)
-    print(anguar_vel)
+    print("This is the current Linear velocity !\n")
 
     p.stepSimulation()
 
