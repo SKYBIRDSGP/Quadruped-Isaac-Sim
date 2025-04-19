@@ -15,6 +15,7 @@ QUAD_MOVE_DEQUE = 10
 
 HM_RANDOM_EPISODES = 10
 MAX_TOTAL_REWARD = 200
+min_move = 0.05
 
 joint_ids = [ 2,  3, 4, 6, 7, 8, 10, 11, 12, 14, 15, 16 ]
 
@@ -70,7 +71,14 @@ for _ep in range(MAX_EPISODES):
     quad_actions = []
     quad_action_history = []
 
+    prev_joint_angle = []
+     
     for step in range(MAX_STEPS):
+
+        for i in joint_ids:
+            joint_state = p.getJointState(robot, i)
+            joint_angle = joint_state[0]  # Position is the first element
+            prev_joint_angle.append(joint_angle)
 
     ## Tracking the Linear and angular velocity of the Quadruped
         linear_vel, anguar_vel = p.getBaseVelocity(robot)
@@ -107,16 +115,27 @@ for _ep in range(MAX_EPISODES):
 
         new_observation = np.float32(p.getJointState(robot, joint) for joint in joint_ids)
 
-        start_x_vel = linear_vel[0]
-        start_y_vel = linear_vel[1]
-        start_z_vel = linear_vel[2]
+        start_vel = linear_vel
 
-        current_x_vel = new_lin_vel[0]
-        current_y_vel = new_lin_vel[1]
-        current_z_vel = new_lin_vel[2]
-
+        current_vel = new_lin_vel
         
+        total_reward = (current_vel[1]-start_vel[1] - (current_vel[0]-start_vel[0])) / 10.0
+        reward = total_reward - quad_prev_rewards
 
-    
+        no_move = 0
 
+        new_joint_angle = []
+
+        for i in joint_ids:
+            joint_state = p.getJointState(robot, i)
+            joint_angle = joint_state[0]  
+
+            if joint_angle - prev_joint_angle[i] <= min_move:
+                no_move += 1
+            
+            
+        if no_move <= 8:
+            reward = -2       
+
+        quad_prev_rewards = total_reward
 
